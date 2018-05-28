@@ -2,5 +2,9 @@
 
 Reddit data collection and analysis
 
+## Use
+- Create a virtual environment using requirements.txt
+- Create a praw.ini file in the main directory, guidance [here](https://praw.readthedocs.io/en/latest/getting_started/configuration/prawini.html#praw-ini-files)
+
 ## Resources
-- [Reddit bot building](http://pythonforengineers.com/build-a-reddit-bot-part-1/)
+- [Reddit bot building walkthru](http://pythonforengineers.com/build-a-reddit-bot-part-1/)

@@ -1,3 +1,6 @@
+# Other files I don't want shared
+info.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

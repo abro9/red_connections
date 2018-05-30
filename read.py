@@ -22,7 +22,6 @@ def get_comment_subreddit_dict(username):
     subreddit_dict = {}
 
     for comment in reddit.redditor(username).comments.new(limit=None):
-        #print(comment.subreddit)
         sub_name = comment.subreddit.display_name
         if sub_name in subreddit_dict.keys():
             subreddit_dict[sub_name] += 1

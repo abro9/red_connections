@@ -4,8 +4,8 @@ import praw
 import prawcore
 import json
 
-data_input_path = './data/usernames_POPULAR_1000.txt'
-data_output_path = './usernames_POPULAR_1000.json'
+data_input_path = './data/usernames_All_1000.txt'
+data_output_path = './usernames_All_1000.json'
 
 reddit = praw.Reddit('bot1')
 
@@ -21,7 +21,9 @@ def get_submission_subreddit_dict(username):
                 subreddit_dict[sub_name] += 1
             else:
                 subreddit_dict[sub_name] = 1
-    except prawcore.exceptions.NotFound:
+    except (KeyboardInterrupt, SystemExit):
+        raise
+    except:
         pass
 
     return subreddit_dict
@@ -36,7 +38,9 @@ def get_comment_subreddit_dict(username):
                 subreddit_dict[sub_name] += 1
             else:
                 subreddit_dict[sub_name] = 1
-    except prawcore.exceptions.NotFound:
+    except (KeyboardInterrupt, SystemExit):
+        raise
+    except:
         pass
 
     return subreddit_dict

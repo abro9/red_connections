@@ -8,4 +8,5 @@ Reddit data collection and analysis
 
 ## Resources
 - [Graph building](https://plot.ly/python/3d-network-graph/)
+- [PRAW info](http://praw.readthedocs.io/en/latest/index.html)
 - [Reddit bot building walkthru](http://pythonforengineers.com/build-a-reddit-bot-part-1/)

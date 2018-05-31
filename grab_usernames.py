@@ -2,7 +2,7 @@
 
 import praw
 
-SUB = 'Popular'
+SUB = 'All'
 reddit = praw.Reddit('bot1')
 subreddit = reddit.subreddit(SUB)
 

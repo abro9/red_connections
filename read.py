@@ -4,8 +4,8 @@ import praw
 import prawcore
 import json
 
-data_input_path = './data/usernames_All_1000.txt'
-data_output_path = './usernames_All_1000.json'
+data_input_path = './data/usernames_ALL_1000.txt'
+data_output_path = './usernames_ALL_1000.json'
 
 reddit = praw.Reddit('bot1')
 

@@ -79,7 +79,7 @@ if __name__ == "__main__":
         user_list_len = len(user_list)
 
         if dict_len % 50 <= 1:
-            print(str(dict_len * 100 / user_list_len) + '%')
+            print('{0} of {1} done'.format(dict_len,  user_list_len))
 
     with open(data_output_path, 'w') as f:
         json.dump(redditor_dict, f)

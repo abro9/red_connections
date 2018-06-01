@@ -4,7 +4,7 @@ import praw
 import os import listdir
 
 SUB = 'All'
-reddit = praw.Reddit('bot1')
+reddit = praw.Reddit('bot2')
 subreddit = reddit.subreddit(SUB)
 
 user_set = set()

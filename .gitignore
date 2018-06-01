@@ -3,6 +3,7 @@ info.txt
 praw.ini
 .DS_Store
 *.swp
+bot2_info.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

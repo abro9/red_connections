@@ -78,7 +78,7 @@ if __name__ == "__main__":
         dict_len = len(redditor_dict)
         user_list_len = len(user_list)
 
-        if dict_len % 50 <= 1:
+        if dict_len % 50 == 0:
             print('{0} of {1} done'.format(dict_len,  user_list_len))
 
     with open(data_output_path, 'w') as f:

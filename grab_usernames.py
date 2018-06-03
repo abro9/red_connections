@@ -4,12 +4,12 @@ import praw
 import datetime
 from os import listdir
 
-SUB = 'Popular'
+SUB = 'All'
 reddit = praw.Reddit('bot2')
 subreddit = reddit.subreddit(SUB)
 
 user_set = set()
-num_users = 2000
+num_users = 3000
 
 output_path = '/home/pi/projects/red_connections/data/usernames/'
 

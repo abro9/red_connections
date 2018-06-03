@@ -61,13 +61,9 @@ def build_user_list(input_file):
 
     return user_list
 
+#def parse_io_filenames(input_folder, output_folder):
+
 if __name__ == "__main__":
-
-# user = 'raymincer'
-
-# redditor_dict[user] = build_user_dict(user)
-# print('Submissions: ' + str(redditor_dict[user]['submissions']))
-# print('Comments: ' + str(redditor_dict[user]['comments']))
 
     redditor_dict = {}
     user_list = build_user_list(data_input_path)

@@ -1,14 +1,16 @@
 #!./venv/bin/python3
 
 import praw
-import os import listdir
+from os import listdir
 
-SUB = 'All'
+SUB = 'Popular'
 reddit = praw.Reddit('bot2')
 subreddit = reddit.subreddit(SUB)
 
 user_set = set()
 num_users = 2000
+
+output_path = './data/usernames/'
 
 for submission in subreddit.stream.submissions():
 	if submission.author != None:
@@ -29,11 +31,11 @@ for submission in subreddit.stream.submissions():
 		break
 
 output_num = 0
-dir_list = listdir('./')
-output_filename = 'usernames_{}_{}_{}.txt'.format(SUB.upper(), num_users, output_num)
+dir_list = listdir(output_path)
+output_filename = '{}usernames_{}_{}_{}.txt'.format(output_path, SUB.upper(), num_users, output_num)
 
 while output_filename in dir_list:
-    output_filename = 'usernames_{}_{}_{}.txt'.format(SUB.upper(), num_users, output_num + 1)
+    output_filename = '{}usernames_{}_{}_{}.txt'.format(output_path, SUB.upper(), num_users, output_num + 1)
 
 with open(output_filename, 'w') as f:
 	for username in user_set:

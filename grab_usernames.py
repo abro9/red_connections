@@ -1,6 +1,7 @@
 #!./venv/bin/python3
 
 import praw
+import datetime
 from os import listdir
 
 SUB = 'Popular'
@@ -10,7 +11,7 @@ subreddit = reddit.subreddit(SUB)
 user_set = set()
 num_users = 2000
 
-output_path = './data/usernames/'
+output_path = '/home/pi/projects/red_connections/data/usernames/'
 
 for submission in subreddit.stream.submissions():
 	if submission.author != None:
@@ -32,10 +33,23 @@ for submission in subreddit.stream.submissions():
 
 output_num = 0
 dir_list = listdir(output_path)
-output_filename = '{}usernames_{}_{}_{}.txt'.format(output_path, SUB.upper(), num_users, output_num)
+dt = datetime.datetime.today()
+output_filename = '{}usernames_{}_{}_{}_{}.{}.{}.txt'.format(output_path,
+                                                             SUB.upper(),
+                                                             num_users,
+                                                             output_num,
+                                                             dt.month,
+                                                             dt.day,
+                                                             dt.year)
 
 while output_filename in dir_list:
-    output_filename = '{}usernames_{}_{}_{}.txt'.format(output_path, SUB.upper(), num_users, output_num + 1)
+    output_filename = '{}usernames_{}_{}_{}_{}.{}.{}.txt'.format(output_path,
+                                                                 SUB.upper(),
+                                                                 num_users,
+                                                                 output_num + 1,
+                                                                 dt.month,
+                                                                 dt.day,
+                                                                 dt.year)
 
 with open(output_filename, 'w') as f:
 	for username in user_set:

@@ -11,7 +11,7 @@ sub_dict_total = {}
 
 input_file = '/home/pi/projects/red_connections/data/all_json.json'
 output_path = '/home/pi/projects/red_connections/data/quick_stats/'
-NUM_TO_OUTPUT = 50
+NUM_TO_OUTPUT = 10
 
 with open(input_file, 'r') as f:
     for line in f:

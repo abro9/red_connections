@@ -66,22 +66,43 @@ def build_user_list(input_file):
     return user_list
 
 # Returnes target filename (no extension)
-def get_target_file(filenames):
+def get_target_file(input_filelist, output_filelist):
 
-    for filename in filenames:
+    input_dict_all = {}
+    output_dict_all = {}
+
+    for (i, f) in list(enumerate(input_filelist)):
+
+        split_list = f.replace('.', '_').split('_')
+
+        fdict = {}
+        fdict['name'] = f[:-4]
+        fdict['index'] = i
+        fdict['version'] = split_list[3]
+        fdict['month'] = split_list[4]
+        fdict['day'] = split_list[5]
+        fdict['year'] = split_list[6]
+
+        input_dict_all[f] = fdict
+
+    current_target = ''
+    current_target_date = [13, 32, 3000]
+
+    for f, fdict in input_dict_all:
+        if fdict[:
 
 
 # Returns dictionary of parsed filenames
 def parse_io_filenames(input_folder, output_folder):
 
-    file_list = listdir(output_folder)
-    source_filename = get_target_file(file_list)
-
-    source_stripped = source_filename[:-4]
+    input_filelist = listdir(input_folder)
+    output_filelist = listdir(input_folder)
+    target_filename_base = get_target_file(input_filelist, output_filelist)
     
-    target_filename = source_stripped + '.json'
+    data_input_path = input_folder + target_filename_base + '.txt'
+    data_output_path = output_folder + target_filename_base + '.json'
 
-
+    return (data_input_path, data_output_path)
 
 if __name__ == "__main__":
 

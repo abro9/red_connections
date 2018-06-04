@@ -3,9 +3,13 @@
 import praw
 import prawcore
 import json
+from os import listdir
 
-data_input_path = './data/usernames/usernames_ALL_2000_0.txt'
-data_output_path = './data/json/usernames_ALL_2000_0.json'
+#data_input_path = '/home/pi/projects/red_connections/data/usernames/usernames_ALL_5000_0.txt'
+#data_output_path = '/home/pi/projects/red_connections/data/json/usernames_ALL_5000_0.json'
+
+input folder = '/home/pi/projects/red_connections/data/usernames/'
+output folder = '/home/pi/projects/red_connections/data/json/'
 
 reddit = praw.Reddit('bot1')
 
@@ -61,9 +65,27 @@ def build_user_list(input_file):
 
     return user_list
 
-#def parse_io_filenames(input_folder, output_folder):
+# Returnes target filename (no extension)
+def get_target_file(filenames):
+
+    for filename in filenames:
+
+
+# Returns dictionary of parsed filenames
+def parse_io_filenames(input_folder, output_folder):
+
+    file_list = listdir(output_folder)
+    source_filename = get_target_file(file_list)
+
+    source_stripped = source_filename[:-4]
+    
+    target_filename = source_stripped + '.json'
+
+
 
 if __name__ == "__main__":
+
+    data_input_path, data_output_path = parse_io_filenames(input_folder, output_folder)
 
     redditor_dict = {}
     user_list = build_user_list(data_input_path)

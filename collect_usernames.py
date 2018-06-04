@@ -18,5 +18,5 @@ for user_file in dir_list:
 
 with open(output_path, 'w') as f:
 	for username in user_set:
-		f.write(username + '\n')
+		f.write(username)
 

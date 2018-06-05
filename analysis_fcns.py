@@ -4,62 +4,48 @@ import json
 import datetime
 from os import listdir
 
-user_dict = {}
-sub_dict_s = {} #submissions
-sub_dict_c = {} #comments
-sub_dict_total = {}
-
-input_file = '/home/pi/projects/red_connections/data/all_json.json'
-output_path = '/home/pi/projects/red_connections/data/quick_stats/'
+input_file = './data/json/usernames_POPULAR_1000.json'
+#output_path = '/home/pi/projects/red_connections/data/quick_stats/'
 NUM_TO_OUTPUT = 10
 
 with open(input_file, 'r') as f:
     for line in f:
         import_dict = json.loads(line)
-    for username, v in import_dict.items():
-        for sub, count in v['submissions'].items():
-            if sub in sub_dict_s.keys():
-                sub_dict_s[sub] += count
-            else:
-                sub_dict_s[sub] = count
-        
-        for sub, count in v['comments'].items():
-            if sub in sub_dict_c.keys():
-                sub_dict_c[sub] += count
-            else:
-                sub_dict_c[sub] = count
 
-sub_dict_total = { k: sub_dict_s.get(k, 0) + sub_dict_c.get(k, 0) for k in set(sub_dict_s) | set(sub_dict_c) }
+def user_pairs(user_dict):
+    pair_dict = {}
+    user_subreddits = sorted(list(user_dict.keys()))
+    list_len = len(user_subreddits)
 
-sorted_subs_s = [(k, sub_dict_s[k]) for k in sorted(sub_dict_s, key=sub_dict_s.get, reverse=True)]
-sorted_subs_c = [(k, sub_dict_c[k]) for k in sorted(sub_dict_c, key=sub_dict_c.get, reverse=True)]
-sorted_subs_total = [(k, sub_dict_total[k]) for k in sorted(sub_dict_total, key=sub_dict_total.get, reverse=True)]
+    #print(user_subreddits)
+    #print(user_dict)
+    total_actions = 0
 
-dt = datetime.datetime.today()
+    for value in user_dict.values():
+        total_actions += value
 
-file_list = listdir(output_path)
-num = 0
-out_filename = 'quick_stats_{}.{}.{}_{}.txt'.format(dt.month, dt.day, dt.year, num)
+    if list_len < 2:
+        return {}
 
-while out_filename in file_list:
-    num += 1
-    out_filename = 'quick_stats_{}.{}.{}_{}.txt'.format(dt.month, dt.day, dt.year, num)
+    for start, sub1 in enumerate(user_subreddits):
+        for sub2 in range(start, list_len):
+            sub2 = user_subreddits[sub2]
+            #subs = sorted(sub1, sub2)
+            try:
+                if sub1 != sub2:
+                    new_key = '{}-{}'.format(sub1, sub2)
+                    pair_dict[new_key] = (user_dict[sub1] + user_dict[sub2]) * 100 / total_actions
+            except KeyError:
+                print('keyerror: {} - {}'.format(sub1, sub2))
 
-total_output_path = '{}{}'.format(output_path, out_filename)
+    return pair_dict
 
-with open(total_output_path, 'w+') as f:
-    f.write('Top {} subs by activity (total)\n'.format(NUM_TO_OUTPUT))
-    for sub_tuple in sorted_subs_total[:NUM_TO_OUTPUT]:
-        f.write('{} - {}\n'.format(sub_tuple[0], sub_tuple[1]))
-    f.write('\n')
+#print(import_dict['intothequicksand']['comments'])
+pairs_dict = user_pairs(import_dict['intothequicksand']['comments'])
+#print(pairs_dict)
 
-    f.write('Top {} subs by activity (submissions)\n'.format(NUM_TO_OUTPUT))
-    for sub_tuple in sorted_subs_s[:NUM_TO_OUTPUT]:
-        f.write('{} - {}\n'.format(sub_tuple[0], sub_tuple[1]))
-    f.write('\n')
+for k, v in pairs_dict.items():
+    print('{} -- {}'.format(k, v))
 
-    f.write('Top {} subs by activity (comments)\n'.format(NUM_TO_OUTPUT))
-    for sub_tuple in sorted_subs_c[:NUM_TO_OUTPUT]:
-        f.write('{} - {}\n'.format(sub_tuple[0], sub_tuple[1]))
-
-
+print(max(pairs_dict.values()))
+print(min(pairs_dict.values()))

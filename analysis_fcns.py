@@ -4,9 +4,10 @@ import json
 import datetime
 from os import listdir
 
-input_file = './data/json/usernames_POPULAR_10000.json'
-output_path = './data/big_files/popular_10000_pairs.json'
-NUM_TO_OUTPUT = 10
+input_file = './data/big_files/all_2000_0_pairs.json'
+output_path = './data/big_files/all_2000_0_pairs_comb.json'
+#input_file = './data/json/usernames_ALL_2000_0.json'
+#output_path = './data/big_files/all_2000_0_pairs.json'
 
 with open(input_file, 'r') as f:
     for line in f:
@@ -52,8 +53,36 @@ def calc_all_user_pairs(j_dict):
         user_pairs_dict[user] = user_pairs(j_dict[user])
     return user_pairs_dict
 
-pairs_dict = calc_all_user_pairs(import_dict)
-#print(pairs_dict)
-with open(output_path, 'w+') as f:
-    json.dump(pairs_dict, f)
+def sort_dict_by_value(some_dict):
+    sorted_list = [(k, some_dict[k]) for k in sorted(some_dict, key=some_dict.get, reverse=True)]
+    return sorted_list
+
+def combine(pair_dict, section):
+    comb_dict = {}
+    for user in pair_dict.keys():
+        for sub_pair, count in pair_dict[user][section].items():
+            if sub_pair in comb_dict.keys():
+                comb_dict[sub_pair] += count
+            else:
+                comb_dict[sub_pair] = count
+    return comb_dict
+
+def combine_user_pairs(pair_dict):
+    comb_c_dict = combine(pair_dict, 'comments')
+    comb_s_dict = combine(pair_dict, 'submissions')
+    comb_t_dict = combine(pair_dict, 'total')
+
+    full_pair_dict = {'total': comb_t_dict, 'comments': comb_c_dict, 'submissions': comb_s_dict}
+    return full_pair_dict
+
+if __name__ == "__main__":
+    #pairs_dict = calc_all_user_pairs(import_dict)
+    comb_dict = combine_user_pairs(import_dict)
+
+    sorted_pair_list = sort_dict_by_value(comb_dict['total'])
+    for k, v in sorted_pair_list[:50]:
+        print('{} -- {}'.format(k, v))
+
+    #with open(output_path, 'w+') as f:
+    #    json.dump(comb_dict, f)
 

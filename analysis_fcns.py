@@ -4,8 +4,8 @@ import json
 import datetime
 from os import listdir
 
-input_file = './data/json/usernames_POPULAR_2000_0.json'
-output_path = './data/quick_stats/test_pairs.json'
+input_file = './data/json/usernames_POPULAR_10000.json'
+output_path = './data/big_files/popular_10000_pairs.json'
 NUM_TO_OUTPUT = 10
 
 with open(input_file, 'r') as f:
@@ -48,30 +48,12 @@ def user_pairs(user_dict):
 
 def calc_all_user_pairs(j_dict):
     user_pairs_dict = {}
-    #print(j_dict.keys())
-    #print(j_dict['Lev--'])
     for user in j_dict.keys():
         user_pairs_dict[user] = user_pairs(j_dict[user])
-    #print(user_pairs_dict.keys())
     return user_pairs_dict
 
 pairs_dict = calc_all_user_pairs(import_dict)
 #print(pairs_dict)
 with open(output_path, 'w+') as f:
     json.dump(pairs_dict, f)
-
-print('done')
-#pairs_dict = user_pairs(import_dict['ssstojanovic556'])
-
-#for k, v in pairs_dict['total'].items():
-#    print('{} -- {}'.format(k, v))
-
-#mx = max(pairs_dict.values())
-#mn = min(pairs_dict.values())
-
-#for k, v in pairs_dict.items():
-#    if v == mx:
-#        print('max: {} -- {}'.format(k, v))
-#    if v == mn:
-#        print('min: {} -- {}'.format(k, v))
 

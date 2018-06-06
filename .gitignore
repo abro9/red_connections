@@ -4,6 +4,7 @@ praw.ini
 .DS_Store
 *.swp
 bot2_info.txt
+data/big_files/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

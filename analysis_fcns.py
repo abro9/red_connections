@@ -4,46 +4,74 @@ import json
 import datetime
 from os import listdir
 
-input_file = './data/json/usernames_POPULAR_1000.json'
-output_path = '/home/pi/projects/red_connections/data/quick_stats/'
+input_file = './data/json/usernames_POPULAR_2000_0.json'
+output_path = './data/quick_stats/test_pairs.json'
 NUM_TO_OUTPUT = 10
 
 with open(input_file, 'r') as f:
     for line in f:
         import_dict = json.loads(line)
 
-def user_pairs(user_dict):
-    user_c_dict = user_dict['comments']
-    user_s_dict = user_dict['submissions']
+def calc_pairs(sub_dict):
+    pair_dict = {}
+    sub_list = sorted(list(sub_dict.keys()))
+    num_subs = len(sub_list)
 
-    comment_pair_dict = {}
-    user_comment_subreddits = sorted(list(user_c_dict.keys()))
-    num_comment_subs = len(user_comment_subreddits)
+    num_actions = 0
 
-    comment_actions = 0
+    for value in sub_dict.values():
+        num_actions += value
 
-    for value in user_c_dict.values():
-        comment_actions += value
-
-    if num_comment_subs < 2:
+    if num_subs < 2:
         return {}
 
-    for start, sub1 in enumerate(user_comment_subreddits):
-        for sub2 in range(start, num_comment_subs):
-            sub2 = user_comment_subreddits[sub2]
+    for start, sub1 in enumerate(sub_list):
+        for sub2 in range(start, num_subs):
+            sub2 = sub_list[sub2]
             try:
                 if sub1 != sub2:
                     new_key = '{}-{}'.format(sub1, sub2)
-                    comment_pair_dict[new_key] = (user_c_dict[sub1] + user_c_dict[sub2]) * 100 / comment_actions
+                    pair_dict[new_key] = (sub_dict[sub1] + sub_dict[sub2]) * 100 / num_actions
             except KeyError:
                 print('keyerror: {} - {}'.format(sub1, sub2))
+    return pair_dict
 
-    return comment_pair_dict
+def user_pairs(user_dict):
+    c_pair_dict = calc_pairs(user_dict['comments'])
+    s_pair_dict = calc_pairs(user_dict['submissions'])
 
-pairs_dict = user_pairs(import_dict['intothequicksand'])
+    total_pair_dict = { k: c_pair_dict.get(k, 0) + s_pair_dict.get(k, 0) for k in set(c_pair_dict) | set(s_pair_dict) }
 
-for k, v in pairs_dict.items():
-    print('{} -- {}'.format(k, v))
+    output_dict = {'total': total_pair_dict, 'comments': c_pair_dict, 'submissions': s_pair_dict}
 
-print(max(pairs_dict.values()))
-print(min(pairs_dict.values()))
+    return output_dict
+
+def calc_all_user_pairs(j_dict):
+    user_pairs_dict = {}
+    #print(j_dict.keys())
+    #print(j_dict['Lev--'])
+    for user in j_dict.keys():
+        user_pairs_dict[user] = user_pairs(j_dict[user])
+    #print(user_pairs_dict.keys())
+    return user_pairs_dict
+
+pairs_dict = calc_all_user_pairs(import_dict)
+#print(pairs_dict)
+with open(output_path, 'w+') as f:
+    json.dump(pairs_dict, f)
+
+print('done')
+#pairs_dict = user_pairs(import_dict['ssstojanovic556'])
+
+#for k, v in pairs_dict['total'].items():
+#    print('{} -- {}'.format(k, v))
+
+#mx = max(pairs_dict.values())
+#mn = min(pairs_dict.values())
+
+#for k, v in pairs_dict.items():
+#    if v == mx:
+#        print('max: {} -- {}'.format(k, v))
+#    if v == mn:
+#        print('min: {} -- {}'.format(k, v))
+

@@ -11,5 +11,6 @@ Reddit data collection and analysis
 - [Image inspiration with brief description of its design](https://en.wikipedia.org/wiki/Community_structure#/media/File:Internet_map_1024.jpg)
 - [Potentially helpful paper: Clique Graphs and Overlapping Communities](https://arxiv.org/abs/1009.0638)
 - [Graph building library](https://plot.ly/python/3d-network-graph/)
+- [2D network graphs](https://plot.ly/python/network-graphs/)
 - [PRAW info](http://praw.readthedocs.io/en/latest/index.html)
 - [Reddit bot building walkthru](http://pythonforengineers.com/build-a-reddit-bot-part-1/)

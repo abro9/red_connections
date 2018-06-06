@@ -4,8 +4,8 @@ import praw
 import prawcore
 import json
 
-data_input_path = './data/usernames/usernames_POPULAR_3000_0_6.5.2018.txt'
-data_output_path = './data/json/usernames_POPULAR_3000_0_6.5.2018.json'
+data_input_path = '/home/pi/projects/red_connections/data/usernames/usernames_POPULAR_3000_0_6.5.2018.txt'
+data_output_path = '/home/pi/projects/red_connections/data/json/usernames_POPULAR_3000_0_6.5.2018.json'
 
 reddit = praw.Reddit('bot1')
 

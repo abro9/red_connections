@@ -4,7 +4,7 @@ import praw
 import datetime
 from os import listdir
 
-SUB = 'All'
+SUB = 'Popular'
 reddit = praw.Reddit('bot2')
 subreddit = reddit.subreddit(SUB)
 

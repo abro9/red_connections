@@ -7,6 +7,7 @@ Reddit data collection and analysis
 - Create a praw.ini file in the main directory, guidance [here](https://praw.readthedocs.io/en/latest/getting_started/configuration/prawini.html#praw-ini-files)
 
 ## Resources
+- [JS force directed graphing example](http://www.austintaylor.io/d3/python/pandas/2016/02/01/create-d3-chart-python-force-directed/)
 - [Wikipedia - Community structure](https://en.wikipedia.org/wiki/Community_structure)
 - [Image inspiration with brief description of its design](https://en.wikipedia.org/wiki/Community_structure#/media/File:Internet_map_1024.jpg)
 - [Potentially helpful paper: Clique Graphs and Overlapping Communities](https://arxiv.org/abs/1009.0638)

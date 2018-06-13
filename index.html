@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <head>
 <meta charset="utf-8">
-<title>D3 Force Directed</title>
+<title>Reddit Connections</title>
 
 <!-- JavaScript Libraries //-->
 <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -202,7 +202,58 @@ function drawLinks(links) {
 </head>
 
 <body>
+<h1 align="center"> Reddit Connections </h1>
+<p align="center">Alexander Brown</p> <br>
+
 <div align="center" id="force"></div>
+<p align="center">A visualization of connections based upon 2000 unique users who were active in the 'Popular' multi-subreddit</p> <br>
+
+<div style="margin-left: 10%; margin-right: 10%">
+<h2>About</h2>
+<p>This is a project I've created with the goal of visualizing connections between Reddit subreddits. I think that Reddit is full of fascinating communities, and I was interested in understanding more about the relationships between them.</p> <br>
+
+<h2>Methods</h2> 
+<h3>Data Collection</h3> 
+<p>The data collection process occurs in two main steps. First, usernames are grabbed from new posts from <a href="https://www.reddit.com/r/popular/">/r/popular</a> and <a href="https://www.reddit.com/r/all/">/r/all</a>. Then, I scrape each user's history to determine their number of submissions and posts in each subreddit. These tasks are both done using <a href="http://praw.readthedocs.io/en/latest/index.html#">PRAW</a>, the Python Reddit API Wrapper.</p>
+
+<p>This data collection must be a fairly continuous task if I am to gather a significant amount of information. Fortunately, I have a Raspberry Pi from past projects. I've established several Cron-jobs there to collect data for thousands of users automatically each day.</p>
+
+<h3>Analysis</h3> 
+<p>After I've collected some data, the next task is to calculate the connection strength between each subreddit. This is done in two parts.</p>
+
+<p>First, I calculate the connection strength between each subreddit that an individual user has been active in. This connection strength is currently a simple summation of proportions of the user's posts and comments within the two subreddits. Next, I sum these pair connection strengths across all users to generate the cummulative connection strength for each pair.</p>
+
+<h3>Visualization</h3> 
+<p>I'm currently using <a href="https://d3js.org/">D3</a> to build a force-directed network graph. The width and tension of each link is determined by its previously calculated connection strength. Each node has a maximum of 15 connections with other nodes. However, only the 5 strongest connections are potentially displayed for each node. This is to reduce processing requirements and improve readability, while maintaining an accurate representation of the network.</p>
+
+<p>I am inexperienced with JavaScript, so my implementation is fairly simple as of now. However, as I learn more, I plan on making the network graph more interactive and browsable.</p> <br>
+
+<h2>Resources</h2>
+<h3>Data Collection</h3>
+<ul> 
+  <li><a href="http://praw.readthedocs.io/en/latest/index.html">PRAW info</a></li>
+  <li><a href="http://pythonforengineers.com/build-a-reddit-bot-part-1/">Reddit bot walkthru</a></li>
+</ul>
+
+<h3>Math</h3>
+<ul> 
+  <li><a href="https://en.wikipedia.org/wiki/Force-directed_graph_drawing">Force-directed graph drawing</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Verlet_integration">Verlet integration</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Community_structure">Wikipedia - Community Structure</a></li>
+  <li><a href="https://arxiv.org/abs/1009.0638">Clique Graphs and Overlapping Communities</a></li>
+</ul>
+
+<h3>Visualization</h3> 
+<ul> 
+  <li><a href="https://github.com/d3/d3-force">d3-force</a></li>
+  <li><a href="https://plot.ly/python/3d-network-graph/">Plotly - another potential tool</a></li>
+</ul>
+
+<br>
+<br>
+
+</div>
+
 
 <script>
 d3.json("pcap_export.json", drawGraph);
